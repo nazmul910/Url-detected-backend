@@ -1,4 +1,9 @@
 {
+  "name": "domain-tracker",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
