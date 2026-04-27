@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const domainSchema = new mongoose.Schema({
-  domain: {
+  updatedDomain: {
     type: String,
     required: true,
   },
-  initialDomain: String,
+  oldDomain: String,
   fullUrl: String,
   userAgent: String,
   visitorId: String,
