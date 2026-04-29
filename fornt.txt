@@ -1,0 +1,41 @@
+<script>
+(function () {
+  const INITIAL_DOMAIN = "verdea1.com";
+  const normalize = (d) => d.replace(/^www\./, "");
+  const currentHost = window.location.hostname;
+  const currentPath = window.location.pathname;
+  const isRoot = currentPath === "/" || currentPath === "";
+
+  console.log("currentHost:", currentHost);
+  console.log("isRoot:", isRoot);
+
+  if (isRoot && normalize(currentHost) !== normalize(INITIAL_DOMAIN)) {
+    fetch("https://url-detected-backend.vercel.app/api/save-domain", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-secret": "my-secret-key"
+      },
+      body: JSON.stringify({
+        updatedDomain: currentHost,
+        oldDomain: INITIAL_DOMAIN,
+        fullUrl: window.location.href,
+        userAgent: navigator.userAgent,
+      }),
+    })
+    .then(async (res) => {
+      const data = await res.json();
+      if (res.ok) {
+        console.log(" Sent to backend:", data);
+      } else {
+        console.log(" Backend error:", data);
+      }
+    })
+    .catch((err) => {
+      console.log("Network error:", err);
+    });
+  } else {
+    console.log("Condition not matched, not sending");
+  }
+})();
+</script>
